@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/doublify/pre-commit-rust
+    rev: v1.0
+    hooks:
+      - id: fmt
+
+      # cargo check for Cortex-M target (no_std 项目必须指定目标)
+      - id: cargo-check
+        args: ["--target", "thumbv7em-none-eabihf"]
+
+      # clippy for Cortex-M target
+      - id: clippy
+        args: ["--target", "thumbv7em-none-eabihf"]
