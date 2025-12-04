@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package device;
+
+message DeviceCommand {
+    uint32 device_id = 1;
+    CommandType cmd_type = 2;
+    bytes payload = 3;
+}
+
+message DeviceResponse {
+    uint32 device_id = 1;
+    ResponseType resp_type = 2;
+    bytes data = 3;
+}
+
+enum CommandType {
+    COIN_DISPENSE = 0;
+    LIGHT_ON = 1;
+    LIGHT_OFF = 2;
+    MOTOR_FORWARD = 3;
+    MOTOR_BACKWARD = 4;
+    MOTOR_STOP = 5;
+    SPEAKER_PLAY = 6;
+    ELECTROMAGNET_ON = 7;
+    ELECTROMAGNET_OFF = 8;
+    SENSOR_READ = 9;
+}
+
+enum ResponseType {
+    ACK = 0;
+    NACK = 1;
+    SENSOR_DATA = 2;
+    STATUS = 3;
+}

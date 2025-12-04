@@ -1,5 +1,5 @@
 [package]
-name = "mcu-demo"
+name = "stm32"
 version = "0.1.0"
 edition = "2024"
 
@@ -43,4 +43,13 @@ strip = true
 panic = "abort"
 
 [dependencies]
+cortex-m = "0.7"
 cortex-m-rt = "0.7.5"
+stm32f4xx-hal = {version = "0.23.0", features = ["stm32f407"]}
+prost = { version = "0.14.1", default-features = false, features = ["derive"] }
+heapless = { version = "0.9.2", default-features = false }
+nb = "1.1"
+embedded-alloc = "0.6"
+
+[build-dependencies]
+prost-build = "0.14.1"
