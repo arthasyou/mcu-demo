@@ -1,4 +1,7 @@
-use crate::{device::Device, handler::Handler};
+use crate::{
+    device::{Device, DeviceCommand},
+    handler::Handler,
+};
 
 mod tick;
 
