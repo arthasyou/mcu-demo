@@ -1,14 +1,36 @@
 [build]
 target = "thumbv7em-none-eabi"
 
-rustflags = [
-  "-C", "linker=flip-link",
-  "-C", "link-arg=-Tlink.x",
-  "-C", "link-arg=-Tdefmt.x",
-  # This is needed if your flash or ram addresses are not aligned to 0x10000 in memory.x
-  # See https://github.com/rust-embedded/cortex-m-quickstart/pull/95
-  "-C", "link-arg=--nmagic",
-]
-
 [target.thumbv7em-none-eabi]
 runner = "probe-rs run --chip STM32F407ZG"
+
+[profile.release]
+# 去掉调试符号（DWARF）
+# - 使固件更小
+# - 保护代码不被逆向
+# - 但会让 GDB/probe-rs 无法调试（开发阶段可设为 true）
+debug = true
+
+# 启用链接时优化（Link Time Optimization）
+# - 全局优化整个程序
+# - 删除 dead code
+# - 进一步缩小尺寸，提高速度与安全性
+lto = false
+
+# 把优化目标设为“最小尺寸”
+# - 程序体积最小化（比 opt-level="s" 更激进）
+# - 默认删除空循环、合并函数、强推 inline
+# - 会让反汇编更难阅读（开发阶段可用 opt-level=2）
+opt-level = 2
+
+# 移除符号表（strip）
+# - 删除所有函数名、局部符号等元信息
+# - 固件最小化 & 逆向难度大幅增加（非常适合保护算法）
+# - 调试期间不要启用（否则 objdump 看不到符号）
+strip =  false
+
+# panic 行为设置为“立即终止”
+# - MCU 必须使用 abort；不能使用 unwind（裸机不支持栈展开）
+# - 保证 panic 行为可靠、简单、无 OS 依赖
+# - 减少体积（不生成 unwinding 代码）
+panic = "abort"

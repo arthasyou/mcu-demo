@@ -1,6 +1,6 @@
-fn main() {
-    prost_build::Config::new()
-        .protoc_arg("--experimental_allow_proto3_optional")
-        .compile_protos(&["proto/device.proto"], &["proto/"])
-        .unwrap();
+pub fn main() {
+    // println!("cargo:rerun-if-env-changed=DEFMT_LOG");
+    // println!("cargo:rustc-link-arg-bins=-Tdefmt.x");
+    println!("cargo:rustc-link-arg-bins=--nmagic");
+    println!("cargo:rustc-link-arg-bins=-Tlink.x");
 }

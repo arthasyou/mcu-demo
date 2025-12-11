@@ -1,0 +1,8 @@
+MEMORY
+{
+    /* Program stored in internal flash */
+    FLASH (rx) : ORIGIN = 0x08000000, LENGTH = 1024K
+
+    /* Main SRAM (RAM) */
+    RAM (rwx) : ORIGIN = 0x20000000, LENGTH = 128K
+}
